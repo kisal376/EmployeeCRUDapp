@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
+import {Link} from 'react-router-dom'
 
 function EmployeeList() {
     const [employees, setEmployees] = useState([]);
@@ -17,6 +18,9 @@ function EmployeeList() {
     return (
         <div className="container mt-4">
             <h2>Employee List</h2>
+            <Link to="/add" className="btn btn-primary mb-3">
+                Add Employee
+            </Link>
             <table className="table table-bordered table-striped mt-3">
                 <thead className="thead-dark">
                     <tr>
@@ -29,7 +33,9 @@ function EmployeeList() {
                 <tbody>
                     {employees.map(emp => (
                         <tr key={emp.id}>
-                            <td>{emp.name}</td>
+                            <td>
+                                <Link to={`/employees/${emp.id}`}>{emp.name}</Link>
+                            </td>
                             <td>{emp.email}</td>
                             <td>{emp.position}</td>
                             <td>{emp.company}</td>
