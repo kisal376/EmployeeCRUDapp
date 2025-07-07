@@ -1,0 +1,4 @@
+.table-row-hover:hover td {
+    background-color: #9ecdd5 !important;
+    /* light blue */ 
+}

@@ -6,6 +6,7 @@ import org.springframework.web.bind.annotation.*;
 import jakarta.validation.Valid;
 
 import org.springframework.beans.BeanUtils;
+import org.springframework.data.domain.*;
 
 import java.lang.reflect.Field;
 import java.util.List;
@@ -34,8 +35,18 @@ public class EmployeeController {
      * @return a list of all employees
      */
     @GetMapping
-    public Iterable<Employee> getAllEmployees() {
-        return employeeRepository.findAll();
+    public Page<Employee> getAllEmployees(
+        @RequestParam(defaultValue = "0") int page,
+        @RequestParam(defaultValue = "10") int size,
+        @RequestParam(defaultValue = "id") String sortBy,
+        @RequestParam(defaultValue = "asc") String direction
+    ) {
+        Sort sort = direction.equalsIgnoreCase("desc") 
+            ? Sort.by(sortBy).descending() 
+            : Sort.by(sortBy).ascending();
+        
+        Pageable pageable = PageRequest.of(page, size, sort);
+        return employeeRepository.findAll(pageable);
     }
 
     /**
