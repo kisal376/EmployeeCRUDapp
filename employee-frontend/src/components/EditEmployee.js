@@ -6,11 +6,14 @@ function EditEmployee() {
     const {id} = useParams();
     const navigate = useNavigate();
     const [employee, setEmployee] = useState({
-            name: '',
-            email: '',
-            position: '',
-            company: '',
-        });
+      name: "",
+      email: "",
+      position: "",
+      company: "",
+      dateOfBirth: "",
+      salary: "",
+      employeeType: "",
+    });
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
     
@@ -68,6 +71,16 @@ function EditEmployee() {
             </div>
 
             <div className="mb-3">
+              <label className="form-label">Date of Birth:</label>
+              <input
+                type="date"
+                name="dateOfBirth"
+                className="form-control"
+                value={employee.dateOfBirth}
+                onChange={handleChange}
+              />
+            </div>
+            <div className="mb-3">
               <label className="form-label">Email:</label>
               <input
                 type="email"
@@ -86,6 +99,33 @@ function EditEmployee() {
                 name="position"
                 className="form-control"
                 value={employee.position}
+                onChange={handleChange}
+              />
+            </div>
+
+            <div className="mb-3">
+              <label className="form-label">Employee Type:</label>
+              <select
+                name="employeeType"
+                className="form-select"
+                value={employee.employeeType}
+                onChange={handleChange}
+              >
+                <option value="">Select Type</option>
+                <option value="Full-Time">Full-Time</option>
+                <option value="Part-Time">Part-Time</option>
+                <option value="Contractor">Contractor</option>
+                <option value="Intern">Intern</option>
+              </select>
+            </div>
+
+            <div className="mb-3">
+              <label className="form-label">Salary:</label>
+              <input
+                type="number"
+                name="salary"
+                className="form-control"
+                value={employee.salary}
                 onChange={handleChange}
               />
             </div>

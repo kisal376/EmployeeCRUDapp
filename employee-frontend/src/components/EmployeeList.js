@@ -41,64 +41,106 @@ function EmployeeList() {
     };
 
     return (
-        <div className="container mt-4">
-            <h2>Employee List</h2>
-            <Link to="/add" className="btn btn-primary mb-3">
-                Add Employee
-            </Link>
-            <table className="table table-bordered table-striped mt-3">
-                <thead className="thead-dark">
-                    <tr>
-                        <th onClick={() => { handleSort('name') }} style={{ cursor: 'pointer' }}>
-                            Name {sortField === 'name' && (sortDirection === 'asc' ? '▲' : '▼')}
-                        </th>
-                        <th>Email</th>
-                        <th onClick={() => { handleSort('position') }} style={{ cursor: 'pointer' }}>
-                            Job Title {sortField === 'position' && (sortDirection === 'asc' ? '▲' : '▼')}
-                        </th>
-                        <th onClick={() => { handleSort('company') }} style={{ cursor: 'pointer' }}>
-                            Company {sortField === 'company' && (sortDirection === 'asc' ? '▲' : '▼')}
-                        </th>
-                    </tr>
-                </thead>
-                <tbody>
-                    {employees.map((emp) => (
-                        <tr
-                            key={emp.id}
-                            className="table-row-hover"
-                            onClick={() => navigate(`/employees/${emp.id}`)}
-                            style={{ cursor: "pointer" }}
-                        >
-                            <td>{emp.name}</td>
-                            <td>{emp.email}</td>
-                            <td>{emp.position}</td>
-                            <td>{emp.company}</td>
-                        </tr>
-                    ))}
-                </tbody>
-            </table>
+      <div className="container mt-4">
 
-            {/* Pagination controls */}
-            <div className="d-flex justify-content-between">
-                <button
-                    className="btn btn-secondary"
-                    onClick={handlePrev}
-                    disabled={page === 0}
-                >
-                    Previous
-                </button>
-                <span>
-                    Page {page + 1} of {totalPages}
-                </span>
-                <button
-                    className="btn btn-secondary"
-                    onClick={handleNext}
-                    disabled={page === totalPages - 1}
-                >
-                    Next
-                </button>
-            </div>
+        <div className="table-responsive">
+          {
+            <table className="table table-striped table-hover table-bordered align-middle">
+              <thead className="table-dark text-center">
+                <tr>
+                  <th
+                    onClick={() => handleSort("name")}
+                    style={{ cursor: "pointer" }}
+                  >
+                    Name{" "}
+                    {sortField === "name" &&
+                      (sortDirection === "asc" ? "▲" : "▼")}
+                  </th>
+                  <th>Email</th>
+                  <th
+                    onClick={() => handleSort("position")}
+                    style={{ cursor: "pointer" }}
+                  >
+                    Job Title{" "}
+                    {sortField === "position" &&
+                      (sortDirection === "asc" ? "▲" : "▼")}
+                  </th>
+                  <th
+                    onClick={() => handleSort("employeeType")}
+                    style={{ cursor: "pointer" }}
+                  >
+                    Employee Type{" "}
+                    {sortField === "employeeType" &&
+                      (sortDirection === "asc" ? "▲" : "▼")}
+                  </th>
+                  <th
+                    onClick={() => handleSort("salary")}
+                    style={{ cursor: "pointer" }}
+                  >
+                    Salary{" "}
+                    {sortField === "salary" &&
+                      (sortDirection === "asc" ? "▲" : "▼")}
+                  </th>
+                  <th
+                    onClick={() => handleSort("company")}
+                    style={{ cursor: "pointer" }}
+                  >
+                    Company{" "}
+                    {sortField === "company" &&
+                      (sortDirection === "asc" ? "▲" : "▼")}
+                  </th>
+                </tr>
+              </thead>
+              <tbody>
+                {employees.map((emp) => (
+                  <tr
+                    key={emp.id}
+                    className="table-row-hover"
+                    onClick={() => navigate(`/employees/${emp.id}`)}
+                    style={{ cursor: "pointer" }}
+                  >
+                    <td className="text-capitalize text-nowrap">{emp.name}</td>
+                    <td className="text-nowrap">{emp.email}</td>
+                    <td className="text-capitalize text-nowrap">
+                      {emp.position}
+                    </td>
+                    <td className="text-capitalize text-nowrap">
+                      {emp.employeeType}
+                    </td>
+                    <td className="text-capitalize text-nowrap">
+                      {emp.salary}
+                    </td>
+                    <td className="text-capitalize text-nowrap">
+                      {emp.company}
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          }
         </div>
+
+        {/* Pagination controls */}
+        <div className="d-flex justify-content-between">
+          <button
+            className="btn btn-secondary"
+            onClick={handlePrev}
+            disabled={page === 0}
+          >
+            Previous
+          </button>
+          <span className="align-self-center">
+            Page {page + 1} of {totalPages}
+          </span>
+          <button
+            className="btn btn-secondary"
+            onClick={handleNext}
+            disabled={page === totalPages - 1}
+          >
+            Next
+          </button>
+        </div>
+      </div>
     );
 }
 

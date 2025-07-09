@@ -54,10 +54,19 @@ function EmployeeDetail(){
             <strong>Name:</strong> {employee.name}
           </p>
           <p>
+          <p>
+            <strong>Date of Birth:</strong> {employee.dateOfBirth}
+          </p>
             <strong>Email:</strong> {employee.email}
           </p>
           <p>
             <strong>Job Title:</strong> {employee.position}
+          </p>
+          <p>
+            <strong>Employee Type:</strong> {employee.employeeType}
+          </p>
+          <p>
+            <strong>Salary:</strong> {employee.salary}
           </p>
           <p>
             <strong>Company:</strong> {employee.company}
