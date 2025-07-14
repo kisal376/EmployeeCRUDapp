@@ -39,13 +39,20 @@ public class EmployeeController {
         @RequestParam(defaultValue = "0") int page,
         @RequestParam(defaultValue = "10") int size,
         @RequestParam(defaultValue = "id") String sortBy,
-        @RequestParam(defaultValue = "asc") String direction
+        @RequestParam(defaultValue = "asc") String direction,
+        @RequestParam(required = false) String keyword,
+        @RequestParam(required = false) String typeFilter
     ) {
         Sort sort = direction.equalsIgnoreCase("desc") 
             ? Sort.by(sortBy).descending() 
             : Sort.by(sortBy).ascending();
-        
+
         Pageable pageable = PageRequest.of(page, size, sort);
+        
+        if (keyword != null || typeFilter != null) {
+            return employeeRepository.searchEmployees(keyword, typeFilter, pageable);
+        }
+        
         return employeeRepository.findAll(pageable);
     }
 
