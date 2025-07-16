@@ -17,7 +17,7 @@ function EmployeeList() {
     const navigate = useNavigate();
 
     useEffect(() => {
-      axios.get(`http://localhost:8080/employees`, {
+      axios.get(`/api/employees`, {
         params: {
             page,
             size: pageSize,

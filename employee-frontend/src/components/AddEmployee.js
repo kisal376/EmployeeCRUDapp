@@ -22,7 +22,7 @@ function AddEmployee() {
 
     const handleSubmit = (e) => {
         e.preventDefault();
-        axios.post('http://localhost:8080/employees', formData)
+        axios.post('/api/employees', formData)
             .then(() => navigate('/employees'))
             .catch(() => alert('Failed to add employee'));
     };

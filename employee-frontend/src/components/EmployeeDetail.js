@@ -11,7 +11,7 @@ function EmployeeDetail(){
     const navigate = useNavigate();
 
     useEffect(() => {
-        axios.get(`http://localhost:8080/employees/${id}`)
+        axios.get(`/api/employees/${id}`)
         .then(response => {
             setEmployee(response.data);
             setLoading(false);
@@ -29,7 +29,7 @@ function EmployeeDetail(){
       if (!confirmed) return;
 
       axios
-        .delete(`http://localhost:8080/employees/${id}`)
+        .delete(`/api/employees/${id}`)
         .then(() => {
           alert("Employee deleted successfully.");
           navigate("/employees"); // Go back to list after deletion
