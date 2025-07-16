@@ -3,17 +3,30 @@ import axios from 'axios';
 import { Link, useNavigate } from 'react-router-dom';
 import "./EmployeeList.css";
 
+const PAGE_SIZE = 20;
+
 function EmployeeList() {
     const [employees, setEmployees] = useState([]);
     const [page, setPage] = useState(0);
     const [totalPages, setTotalPages] = useState(0);
     const [sortField, setSortField] = useState("name");
-    const [sortDirection, setSortDirection] = useState("asc")
-    const pageSize = 20;
+    const [sortDirection, setSortDirection] = useState("asc");
+    const [searchKeyword, setSearchKeyword] = useState("");
+    const [typeFilter, setTypeFilter] = useState("");
+    const pageSize = PAGE_SIZE;
     const navigate = useNavigate();
 
     useEffect(() => {
-        axios.get(`http://localhost:8080/employees?page=${page}&size=${pageSize}&sortBy=${sortField}&direction=${sortDirection}`)
+      axios.get(`http://localhost:8080/employees`, {
+        params: {
+            page,
+            size: pageSize,
+            sortBy: sortField,
+            direction: sortDirection,
+            keyword: searchKeyword || "",
+            typeFilter: typeFilter || ""
+        }
+    })
             .then(response => {
                 setEmployees(response.data.content); //contains employee list
                 setTotalPages(response.data.totalPages); //total number of pages
@@ -21,7 +34,7 @@ function EmployeeList() {
             .catch(error => {
                 console.error('There was an error fetching employees!', error);
             });
-    }, [page, sortField, sortDirection]);
+    }, [page, sortField, sortDirection, searchKeyword, typeFilter]);
 
     const handlePrev = () => {
         if (page > 0) setPage(page - 1);
@@ -42,7 +55,25 @@ function EmployeeList() {
 
     return (
       <div className="container mt-4">
-
+        <div className="d-flex mb-3">
+          <input
+            type="text"
+            placeholder="Search..."
+            className="form-control me-2"
+            value={searchKeyword}
+            onChange={(e) => setSearchKeyword(e.target.value)}
+          />
+          <select
+            className="form-select"
+            value={typeFilter}
+            onChange={(e) => setTypeFilter(e.target.value)}
+          >
+            <option value="">All Types</option>
+            <option value="Full-Time">Full-Time</option>
+            <option value="Part-Time">Part-Time</option>
+            <option value="Intern">Intern</option>
+          </select>
+        </div>
         <div className="table-responsive">
           {
             <table className="table table-striped table-hover table-bordered align-middle">
@@ -56,7 +87,7 @@ function EmployeeList() {
                     {sortField === "name" &&
                       (sortDirection === "asc" ? "▲" : "▼")}
                   </th>
-                  <th>Email</th>
+                  <th>E-mail</th>
                   <th
                     onClick={() => handleSort("position")}
                     style={{ cursor: "pointer" }}
