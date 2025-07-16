@@ -69,8 +69,9 @@ function EmployeeList() {
             onChange={(e) => setTypeFilter(e.target.value)}
           >
             <option value="">All Types</option>
-            <option value="Full-Time">Full-Time</option>
-            <option value="Part-Time">Part-Time</option>
+            <option value="Full Time">Full Time</option>
+            <option value="Part Time">Part Time</option>
+            <option value="Contract">Contract</option>
             <option value="Intern">Intern</option>
           </select>
         </div>
