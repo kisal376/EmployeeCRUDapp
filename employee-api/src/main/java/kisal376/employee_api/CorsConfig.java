@@ -14,7 +14,11 @@ public class CorsConfig {
             @Override
             public void addCorsMappings(CorsRegistry registry) {
                 registry.addMapping("/**")
-                        .allowedOrigins("http://localhost:3000")
+                        .allowedOrigins(
+                                "http://localhost:3000", // For local development
+                                "http://employeeapp.app", // Replace with your actual domain (http)
+                                "https://employeeapp.app" // Secure production domain
+                )
                         .allowedMethods("*")
                         .allowedHeaders("*")
                         .allowCredentials(true);
