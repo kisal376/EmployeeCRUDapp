@@ -55,8 +55,8 @@ services:
     command: start
     environment:
       KC_HOSTNAME: auth.employeeapp.app
-      KC_HOSTNAME_STRICT: true
-      KC_HTTP_ENABLED: true
+      KC_HOSTNAME_STRICT: "true"
+      KC_HTTP_ENABLED: "true"
       KC_PROXY: edge
       KEYCLOAK_ADMIN: admin
       KEYCLOAK_ADMIN_PASSWORD: admin
