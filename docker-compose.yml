@@ -55,13 +55,15 @@ services:
     command: start
     environment:
       KC_HOSTNAME: auth.employeeapp.app
-      KC_HOSTNAME_STRICT: "false"       # more forgiving in development
-      KC_HTTP_ENABLED: "true"           # allow HTTP access internally from Nginx
+      KC_HOSTNAME_ADMIN: auth.employeeapp.app
+      KC_HOSTNAME_STRICT: "false"
+      KC_HTTP_ENABLED: "true"
       KC_PROXY: edge
       KEYCLOAK_ADMIN: admin
       KEYCLOAK_ADMIN_PASSWORD: admin
     networks:
       - app-network
+
 
 
 
