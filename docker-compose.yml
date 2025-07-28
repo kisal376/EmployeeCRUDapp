@@ -52,18 +52,17 @@ services:
   keycloak:
     image: quay.io/keycloak/keycloak:24.0.1
     container_name: keycloak
-    hostname: keycloak
-    command: start-dev
+    command: start
     environment:
-      KC_DB: dev-mem
+      KC_HOSTNAME: auth.employeeapp.app
+      KC_HOSTNAME_STRICT: true
+      KC_HTTP_ENABLED: true
+      KC_PROXY: edge
       KEYCLOAK_ADMIN: admin
       KEYCLOAK_ADMIN_PASSWORD: admin
-      KC_HOSTNAME: auth.employeeapp.app
-      KC_HTTP_RELATIVE_PATH: /
-    ports:
-      - "8081:8080"
     networks:
       - app-network
+
 
 
 
