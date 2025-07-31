@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import { Link, useNavigate } from 'react-router-dom';
 import "./EmployeeList.css";
+import keycloak from "./keycloak";
 
 const PAGE_SIZE = 20;
 
@@ -17,23 +18,27 @@ function EmployeeList() {
     const navigate = useNavigate();
 
     useEffect(() => {
-      axios.get(`/api/employees`, {
-        params: {
+      axios
+        .get(`/api/employees`, {
+          headers: {
+            Authorization: `Bearer ${keycloak.token}`,
+          },
+          params: {
             page,
             size: pageSize,
             sortBy: sortField,
             direction: sortDirection,
             keyword: searchKeyword || "",
-            typeFilter: typeFilter || ""
-        }
-    })
-            .then(response => {
-                setEmployees(response.data.content); //contains employee list
-                setTotalPages(response.data.totalPages); //total number of pages
-            })
-            .catch(error => {
-                console.error('There was an error fetching employees!', error);
-            });
+            typeFilter: typeFilter || "",
+          },
+        })
+        .then((response) => {
+          setEmployees(response.data.content); //contains employee list
+          setTotalPages(response.data.totalPages); //total number of pages
+        })
+        .catch((error) => {
+          console.error("There was an error fetching employees!", error);
+        });
     }, [page, sortField, sortDirection, searchKeyword, typeFilter]);
 
     const handlePrev = () => {
