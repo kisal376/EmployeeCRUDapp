@@ -24,6 +24,7 @@ import keycloak from "./components/keycloak";
 
 keycloak.init({ onLoad: "login-required" }).then((authenticated) => {
   if (authenticated) {
+     window.keycloak = keycloak;
     ReactDOM.render(<App />, document.getElementById("root"));
 
     // Refresh token every 6 seconds
