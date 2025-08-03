@@ -1,6 +1,8 @@
 import React, {useState} from "react";
-import axios from "axios";
+// import axios from "axios";
+import axios from "../utils/axiosInstance";
 import { useNavigate } from "react-router-dom";
+import keycloak from "./keycloak";
 
 function AddEmployee() {
     const navigate  = useNavigate();
@@ -22,10 +24,12 @@ function AddEmployee() {
 
     const handleSubmit = (e) => {
         e.preventDefault();
-        axios.post('/api/employees', formData)
-            .then(() => navigate('/employees'))
-            .catch(() => alert('Failed to add employee'));
+        axios
+          .post("/employees", formData)
+          .then(() => navigate("/employees"))
+          .catch(() => alert("Failed to add employee"));
     };
+    
 
     return (
       <div className="container mt-4">

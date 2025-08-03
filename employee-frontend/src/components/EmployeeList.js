@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
-import axios from 'axios';
+// import axios from 'axios';
+import axios from "../utils/axiosInstance";
 import { Link, useNavigate } from 'react-router-dom';
 import "./EmployeeList.css";
 import keycloak from "./keycloak";
@@ -19,10 +20,7 @@ function EmployeeList() {
 
     useEffect(() => {
       axios
-        .get(`/api/employees`, {
-          headers: {
-            Authorization: `Bearer ${keycloak.token}`,
-          },
+        .get("/employees", {
           params: {
             page,
             size: pageSize,
@@ -33,8 +31,8 @@ function EmployeeList() {
           },
         })
         .then((response) => {
-          setEmployees(response.data.content); //contains employee list
-          setTotalPages(response.data.totalPages); //total number of pages
+          setEmployees(response.data.content);
+          setTotalPages(response.data.totalPages);
         })
         .catch((error) => {
           console.error("There was an error fetching employees!", error);

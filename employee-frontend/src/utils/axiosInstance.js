@@ -1,0 +1,19 @@
+// src/utils/axiosInstance.js
+import axios from "axios";
+
+const axiosInstance = axios.create({
+  baseURL: "/api", // this matches your backend reverse proxy
+});
+
+axiosInstance.interceptors.request.use(
+  (config) => {
+    const token = localStorage.getItem("token"); // token saved after login
+    if (token) {
+      config.headers.Authorization = `Bearer ${token}`;
+    }
+    return config;
+  },
+  (error) => Promise.reject(error)
+);
+
+export default axiosInstance;
