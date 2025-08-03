@@ -9,7 +9,13 @@ import org.springframework.beans.BeanUtils;
 import org.springframework.data.domain.*;
 
 import java.lang.reflect.Field;
+import java.util.Collection;
 import java.util.List;
+import java.util.Map;
+
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.security.oauth2.jwt.Jwt;
 
 /**
  * REST controller for managing Employee resources.
@@ -178,4 +184,16 @@ public class EmployeeController {
         employeeRepository.deleteAll();
         return ResponseEntity.noContent().build();
     }
+
+    @GetMapping("/api/debug/token")
+    public Map<String, Object> getTokenDetails(@AuthenticationPrincipal Jwt jwt) {
+        return jwt.getClaims();
+    }
+
+    @GetMapping("/api/debug/auth")
+    public Collection<? extends GrantedAuthority> getAuthorities(@AuthenticationPrincipal Jwt jwt) {
+        KeycloakRealmRoleConverter converter = new KeycloakRealmRoleConverter();
+        return converter.convert(jwt); // this should print [ROLE_USER]
+    }
 }
+

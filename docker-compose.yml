@@ -51,6 +51,8 @@ services:
   
   keycloak:
     image: quay.io/keycloak/keycloak:24.0.1
+    volumes:
+      - keycloak_data:/opt/keycloak/data
     container_name: keycloak
     command: start
     environment:
@@ -74,3 +76,4 @@ networks:
 
 volumes:
   mongo_data:
+  keycloak_data:
