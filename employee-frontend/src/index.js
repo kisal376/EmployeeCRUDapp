@@ -1,48 +1,31 @@
-// import React from 'react';
-// import ReactDOM from 'react-dom/client';
-// import App from './App';
-// import reportWebVitals from './reportWebVitals';
-
-// const root = ReactDOM.createRoot(document.getElementById('root'));
-// root.render(
-  //   <React.StrictMode>
-  //     <App />
-  //   </React.StrictMode>
-  // );
-  
-  // // If you want to start measuring performance in your app, pass a function
-  // // to log results (for example: reportWebVitals(console.log))
-  // // or send to an analytics endpoint. Learn more: https://bit.ly/CRA-vitals
-  // reportWebVitals();
-  
-  import React from "react";
-  import ReactDOM from "react-dom/client"; // ✅ use 'client' here
-  import App from "./App";
-  import keycloak from "./components/keycloak";
-  import './index.css';
-  import 'bootstrap/dist/css/bootstrap.min.css';
+import React from "react";
+import ReactDOM from "react-dom/client"; // ✅ use 'client' here
+import App from "./App";
+import keycloak from "./components/keycloak";
+import './index.css';
+import 'bootstrap/dist/css/bootstrap.min.css';
 
 const container = document.getElementById("root");
 const root = ReactDOM.createRoot(container);
 
 keycloak.init({ onLoad: "login-required" }).then((authenticated) => {
-  if (authenticated) {
-    console.log("Access Token:", keycloak.token);
+if (authenticated) {
+  console.log("Access Token:", keycloak.token);
 
-    root.render(
-      // ✅ use root.render instead of ReactDOM.render
-      <React.StrictMode>
-        <App />
-      </React.StrictMode>
-    );
+  root.render(
+    // ✅ use root.render instead of ReactDOM.render
+    <React.StrictMode>
+      <App />
+    </React.StrictMode>
+  );
 
-    // Refresh token every 6 seconds
-    setInterval(() => {
-      keycloak.updateToken(70).catch(() => {
-        keycloak.logout();
-      });
-    }, 6000);
-  } else {
-    keycloak.login();
-  }
+  // Refresh token every 6 seconds
+  setInterval(() => {
+    keycloak.updateToken(70).catch(() => {
+      keycloak.logout();
+    });
+  }, 6000);
+} else {
+  keycloak.login();
+}
 });
