@@ -19,7 +19,7 @@ function EditEmployee() {
     const [error, setError] = useState(null);
     
     useEffect(() => {
-        axios.get(`/api/employees/${id}`)
+        axios.get(`/employees/${id}`)
             .then(respose => {
                 setEmployee(respose.data);
                 setLoading(false);
@@ -39,7 +39,7 @@ function EditEmployee() {
 
     const handleSubmit = (e) => {
         e.preventDefault();
-        axios.put(`/api/employees/${id}`, employee)
+        axios.put(`/employees/${id}`, employee)
             .then(() => {
                 navigate('/employees');
             })
