@@ -27,7 +27,7 @@ const root = ReactDOM.createRoot(container);
 
 keycloak.init({ onLoad: "login-required" }).then((authenticated) => {
   if (authenticated) {
-    // window.keycloak = keycloak;
+    console.log("Access Token:", keycloak.token);
 
     root.render(
       // ✅ use root.render instead of ReactDOM.render

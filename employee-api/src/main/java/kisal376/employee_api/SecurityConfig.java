@@ -29,8 +29,8 @@ public class SecurityConfig {
     @Bean
     public JwtAuthenticationConverter jwtAuthenticationConverter() {
         JwtGrantedAuthoritiesConverter grantedAuthoritiesConverter = new JwtGrantedAuthoritiesConverter();
-        grantedAuthoritiesConverter.setAuthorityPrefix(""); // ❗️ Remove default "ROLE_"
-        grantedAuthoritiesConverter.setAuthoritiesClaimName("realm_access.roles"); // ✅ Keycloak role claim
+        grantedAuthoritiesConverter.setAuthorityPrefix(""); // Remove default "ROLE_"
+        grantedAuthoritiesConverter.setAuthoritiesClaimName("realm_access.roles"); // Keycloak role claim
 
         JwtAuthenticationConverter converter = new JwtAuthenticationConverter();
         converter.setJwtGrantedAuthoritiesConverter(grantedAuthoritiesConverter);
