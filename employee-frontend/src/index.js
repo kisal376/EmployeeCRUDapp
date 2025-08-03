@@ -18,14 +18,23 @@
 // reportWebVitals();
 
 import React from "react";
-import ReactDOM from "react-dom";
+import ReactDOM from "react-dom/client"; // ✅ use 'client' here
 import App from "./App";
 import keycloak from "./components/keycloak";
+
+const container = document.getElementById("root");
+const root = ReactDOM.createRoot(container);
 
 keycloak.init({ onLoad: "login-required" }).then((authenticated) => {
   if (authenticated) {
     window.keycloak = keycloak;
-    ReactDOM.render(<App />, document.getElementById("root"));
+
+    root.render(
+      // ✅ use root.render instead of ReactDOM.render
+      <React.StrictMode>
+        <App />
+      </React.StrictMode>
+    );
 
     // Refresh token every 6 seconds
     setInterval(() => {
