@@ -16,12 +16,14 @@ import java.util.Map;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.oauth2.jwt.Jwt;
+import org.springframework.security.access.prepost.PreAuthorize;
 
 /**
  * REST controller for managing Employee resources.
  */
 @RestController
 @RequestMapping("/employees")
+@PreAuthorize("hasRole('USER')")
 public class EmployeeController {
 
     private final EmployeeRepository employeeRepository;
@@ -41,6 +43,7 @@ public class EmployeeController {
      * @return a list of all employees
      */
     @GetMapping
+    @PreAuthorize("hasRole('USER')")
     public Page<Employee> getAllEmployees(
         @RequestParam(defaultValue = "0") int page,
         @RequestParam(defaultValue = "10") int size,
@@ -69,6 +72,7 @@ public class EmployeeController {
      * @return 200 OK with employee if found, or 404 Not Found if not
      */
     @GetMapping("/{id}")
+    @PreAuthorize("hasRole('USER')")
     public ResponseEntity<Employee> getEmployeeById(@PathVariable String id) {
         Employee employee = employeeRepository.findById(id)
             .orElseThrow(()-> new EmployeeNotFoundException(id));
@@ -83,6 +87,7 @@ public class EmployeeController {
      * @return 200 OK with the saved employee
      */
     @PostMapping
+    @PreAuthorize("hasRole('USER')")
     public ResponseEntity<Employee> addEmployee(@Valid @RequestBody Employee employee) {
         // Validate employee data here if needed
         employeeRepository.save(employee);
@@ -96,6 +101,7 @@ public class EmployeeController {
      * @return 200 OK with the list of saved employees or 400 Bad Request if empty
      */
     @PostMapping("/batch")
+    @PreAuthorize("hasRole('USER')")
     public ResponseEntity<List<Employee>> addEmployees(@RequestBody @Valid List<@Valid Employee> employees) {
         if (employees == null || employees.isEmpty()) {
             return ResponseEntity.badRequest().build();
@@ -112,6 +118,7 @@ public class EmployeeController {
      * @return 200 OK with updated employee or 404 if not found
      */
     @PutMapping("/{id}")
+    @PreAuthorize("hasRole('USER')")
     public ResponseEntity<Employee> updateEmployee(@PathVariable String id,
             @Valid @RequestBody Employee employee) {
         return employeeRepository.findById(id)
@@ -131,6 +138,7 @@ public class EmployeeController {
      * @return 200 OK with updated employee or 404 if not found
      */
     @PatchMapping("/{id}")
+    @PreAuthorize("hasRole('USER')")
     public ResponseEntity<Employee> partialUpdateEmployee(@PathVariable String id,
             @RequestBody Employee employee) {
         return employeeRepository.findById(id)
@@ -165,6 +173,7 @@ public class EmployeeController {
      * @return 204 No Content if deleted, or 404 if not found
      */
     @DeleteMapping("/{id}")
+    @PreAuthorize("hasRole('USER')")
     public ResponseEntity<Void> deleteEmployee(@PathVariable String id) {
         if (employeeRepository.existsById(id)) {
             employeeRepository.deleteById(id);
@@ -180,20 +189,23 @@ public class EmployeeController {
      * @return 204 No Content
      */
     @DeleteMapping("/deleteAll")
+    @PreAuthorize("hasRole('USER')")
     public ResponseEntity<Void> deleteAllEmployees() {
         employeeRepository.deleteAll();
         return ResponseEntity.noContent().build();
     }
 
-    @GetMapping("/api/debug/token")
-    public Map<String, Object> getTokenDetails(@AuthenticationPrincipal Jwt jwt) {
-        return jwt.getClaims();
-    }
+    // @GetMapping("/api/debug/token")
+    // @PreAuthorize("hasRole('USER')")
+    // public Map<String, Object> getTokenDetails(@AuthenticationPrincipal Jwt jwt) {
+    //     return jwt.getClaims();
+    // }
 
-    @GetMapping("/api/debug/auth")
-    public Collection<? extends GrantedAuthority> getAuthorities(@AuthenticationPrincipal Jwt jwt) {
-        KeycloakRealmRoleConverter converter = new KeycloakRealmRoleConverter();
-        return converter.convert(jwt); // this should print [ROLE_USER]
-    }
+    // @GetMapping("/api/debug/auth")
+    // @PreAuthorize("hasRole('USER')")
+    // public Collection<? extends GrantedAuthority> getAuthorities(@AuthenticationPrincipal Jwt jwt) {
+    //     KeycloakRealmRoleConverter converter = new KeycloakRealmRoleConverter();
+    //     return converter.convert(jwt); // this should print [ROLE_USER]
+    // }
 }
 
